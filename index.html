@@ -94,7 +94,6 @@ if (!("NDEFReader" in window))
     ndef.addEventListener("reading", ({ message, serialNumber }) => {
       log(`> Serial Number: ${serialNumber}`);
       log(`> Records: ${message.records.length}`);
-      const message = event.message;
       log(`> NFC Message: ${message}`);
       for (const record of message.records) {
         log(`Raw record:   ${record}`);
