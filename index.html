@@ -20,7 +20,7 @@
 
   <body>
     
-    <h1>Web NFC v0.0.7</h1>
+    <h1>Web NFC v0.0.8</h1>
 
 <button id="scanButton">NFC Scan</button>
 
@@ -101,10 +101,14 @@ if (!("NDEFReader" in window))
 
         for (const record of message.records) {
           log('Next Record...');
-          log('Record type:  ' + record.recordType);
-          log('MIME type:    ' + record.mediaType);
-          log('Record id:    ' + record.id);
-          log(`Raw record:   ${record}`);
+          log('Id:        ' + record.id);
+          log('Type:      ' + record.recordType);
+          log('MIME type: ' + record.mediaType);
+          log('Data:      ' + record.data);
+          log('Encoding:  ' + record.encoding);
+          log('Language:  ' + record.lang);
+
+          //log(`Raw record:   ${record}`);
           //log('Raw record:   ' + JSON.stringify(record));
         }
       } catch (error) {
