@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web NFC Example</title>
+</head>
+<body>
+    <h1>Web NFC Example</h1>
+    <button id="readNfcButton">Read NFC Data</button>
+    <pre id="output"></pre>
+    <script>
+        const readNfcButton = document.getElementById("readNfcButton");
+        const output = document.getElementById("output");
+
+        async function readNfcData() {
+            if (!("NDEFReader" in window)) {
+                output.textContent = "Web NFC is not supported on this device/browser.";
+                return;
+            }
+
+            const ndefReader = new NDEFReader();
+
+            ndefReader.addEventListener("reading", event => {
+                output.textContent = "NFC Data:\n";
+                for (const record of event.message.records) {
+                    output.textContent += `Record type: ${record.recordType}\n`;
+                    output.textContent += `Data: ${new TextDecoder().decode(record.data)}\n`;
+                }
+            });
+
+            ndefReader.addEventListener("readingerror", () => {
+                output.textContent = "An error occurred while reading NFC data.";
+            });
+
+            try {
+                await ndefReader.scan();
+                output.textContent = "Scanning for NFC data...";
+            } catch (error) {
+                output.textContent = `Error: ${error.message}`;
+            }
+        }
+
+        readNfcButton.addEventListener("click", readNfcData);
+    </script>
+</body>
+</html>
